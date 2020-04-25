@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import { Program } from 'types/index';
 import { useTransactions } from 'hooks/useTransactions';
 import TransactionsListItem from './Transaction';
-import { TransactionsStyled, PerPage, Tools, Toggle } from './styled';
+import { TransactionsStyled, PerPage, Tools, Toggle, Status } from './styled';
 
 interface TransactionsProps {
   program: Program;
@@ -59,11 +59,20 @@ const Transactions: React.FC<TransactionsProps> = ({ program, limit = 20 }) => {
         )}
       </TransactionsStyled>
 
-      {status === 'failed' && <div>Oops! Failed to load transactions</div>}
-
-      <div className="loadMore" ref={loadMoreEl}>
-        {status === 'loading' ? <button disabled>Loading...</button> : <button onClick={loadMore}>Load more...</button>}
-      </div>
+      <Status>
+        {status === 'failed' ? (
+          <div className="error">
+            <strong>Oops! Failed to load transactions</strong>
+            <button onClick={loadMore}>Try again</button>
+          </div>
+        ) : (
+          <div className="loadMore" ref={loadMoreEl}>
+            <button onClick={loadMore} disabled={status === 'loading'}>
+              {status === 'loading' ? 'Loading...' : 'Load more'}
+            </button>
+          </div>
+        )}
+      </Status>
     </>
   );
 };

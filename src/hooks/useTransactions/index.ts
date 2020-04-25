@@ -36,19 +36,18 @@ const defaultState: State = {
 const useTransactions = (program: Program, limit = defaultState.limit) => {
   const [state, dispatch] = useReducer(reducer, { ...defaultState, limit });
 
-  useEffect(() => {
-    let mounted = true;
+  const fetchTransactions = () => {
     dispatch({ type: 'LOADING' });
     API.getTransactions(program.id, { limit: state.limit, start: state.start })
-      .then((data) => mounted && dispatch({ type: 'SUCCESS', payload: data }))
-      .catch(() => mounted && dispatch({ type: 'FAILED' }));
-    return () => {
-      mounted = false;
-    };
-  }, [program, state.limit, state.start]);
+      .then((data) => dispatch({ type: 'SUCCESS', payload: data }))
+      .catch(() => dispatch({ type: 'FAILED' }));
+  };
+
+  useEffect(fetchTransactions, [program, state.limit, state.start]);
 
   const loadMore = () => {
-    dispatch({ type: 'LOAD_MORE' });
+    if (state.status === 'failed') fetchTransactions();
+    else dispatch({ type: 'LOAD_MORE' });
   };
 
   const setLimit = (limit: number) => {

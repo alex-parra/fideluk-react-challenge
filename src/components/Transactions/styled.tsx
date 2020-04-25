@@ -98,3 +98,18 @@ export const TransactionStyled = styled.li`
     margin-top: 5px;
   }
 `;
+
+export const Status = styled.div`
+  padding: 10vh 30px;
+  text-align: center;
+
+  strong {
+    display: block;
+    color: #cb0000;
+    font-weight: bold;
+  }
+
+  button {
+    margin-top: 1em;
+  }
+`;
