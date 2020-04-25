@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 export const Tools = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 2px;
+  padding: 2px 2px 2px 10px;
   background-color: #cbd5e0;
   border-radius: 3px;
 `;
@@ -11,16 +11,29 @@ export const Tools = styled.div`
 export const PerPage = styled.label`
   display: flex;
   align-items: center;
-  margin-left: auto;
+  user-select: none;
 
   span {
     padding-right: 0.4em;
     font-weight: bold;
+    cursor: pointer;
   }
 
   input {
     width: 3ch;
     text-align: center;
+  }
+`;
+
+export const Toggle = styled.label`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+
+  span {
+    padding-left: 0.4em;
+    font-weight: bold;
   }
 `;
 
