@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import './App.css';
-
+import { Global } from 'design/index';
 import { Program } from 'types/index';
 import Transactions from './Transactions';
 
@@ -13,14 +12,15 @@ const App: React.FC = () => {
   const [program] = useState(defaultProgram);
 
   return (
-    <div className="App">
+    <>
+      <Global />
       <header>
         <h1>Fidel API Transactions</h1>
       </header>
       <main>
         <Transactions program={program} />
       </main>
-    </div>
+    </>
   );
 };
 

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-
 import { Program } from 'types/index';
 import { useTransactions } from 'hooks/useTransactions';
 import TransactionsListItem from './Transaction';
+import { TransactionsStyled, PerPage, Tools } from './styled';
 
 interface TransactionsProps {
   program: Program;
@@ -22,11 +22,13 @@ const Transactions: React.FC<TransactionsProps> = ({ program, limit = 10 }) => {
 
   return (
     <>
-      <div className="tools">
-        <label>Per page: </label>
-        <input value={perPage} onChange={(ev) => setPerPage(Number(ev.currentTarget.value))} />
-      </div>
-      <div className="transactions">
+      <Tools>
+        <PerPage>
+          <span>Per page: </span>
+          <input value={perPage} onChange={(ev) => setPerPage(Number(ev.currentTarget.value))} />
+        </PerPage>
+      </Tools>
+      <TransactionsStyled>
         {items.length > 0 && (
           <ol>
             {items.map((t) => (
@@ -34,12 +36,12 @@ const Transactions: React.FC<TransactionsProps> = ({ program, limit = 10 }) => {
             ))}
           </ol>
         )}
-      </div>
+      </TransactionsStyled>
 
       {status === 'failed' && <div>Oops! Failed to load transactions</div>}
 
       <div className="loadMore">
-        {status === 'loading' ? <div>Loading...</div> : <button onClick={loadMore}>Load more...</button>}
+        {status === 'loading' ? <button disabled>Loading...</button> : <button onClick={loadMore}>Load more...</button>}
       </div>
     </>
   );
